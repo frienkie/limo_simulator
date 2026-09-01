@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <include file="$(find limo_gazebo)/launch/apartment.launch"/>
+    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
 
     <param name="robot_description" command="$(find xacro)/xacro '$(find limo_description)/urdf/limo_four_diff.xacro'" />
 
@@ -18,13 +18,16 @@
         -param robot_description
         -model limo" />
 
-    <!-- <rosparam file="$(find limo_gazebo)/config/limo_four_diff_control.yaml" command="load"/> -->
+    <rosparam file="$(find limo_gazebo)/config/limo_four_diff_control.yaml" command="load"/>
 
-    <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner"
-          respawn="false" output="screen" args="limo_state_controller"/> -->
+    <node name="controller_spawner"
+      pkg="controller_manager"
+      type="spawner"
+      output="screen"
+      args="limo_state_controller limo"/>
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-    <node name="dummy_zero_cmd_vel" pkg="limo_gazebo" type="dummy_cmd_vel" />
+    <!-- <node name="dummy_zero_cmd_vel" pkg="limo_gazebo" type="dummy_cmd_vel" /> -->
 
     <include file="$(find limo_control)/launch/control.launch"/>
 </launch>
