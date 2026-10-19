@@ -1,9 +1,7 @@
 limo_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 100
-  enable_odom_tf: false
-  open_loop: false
-  
+
 limo:
   type: diff_drive_controller/DiffDriveController
 
@@ -20,7 +18,9 @@ limo:
 
   publish_rate: 100
   cmd_vel_timeout: 0.2
-
+  enable_odom_tf: false
+  open_loop: false
+  
   # 速度 / 加速度限制
   linear:
     x:
