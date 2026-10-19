@@ -1,7 +1,9 @@
 limo_state_controller:
   type: joint_state_controller/JointStateController
   publish_rate: 100
-
+  enable_odom_tf: false
+  open_loop: false
+  
 limo:
   type: diff_drive_controller/DiffDriveController
 
