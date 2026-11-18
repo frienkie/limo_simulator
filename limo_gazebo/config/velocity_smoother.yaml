@@ -1,0 +1,16 @@
+# 速度限制
+speed_lim_v: 1.0      # 最大线速度 m/s
+speed_lim_w: 1.0      # 最大角速度 rad/s
+
+# 加速度限制
+accel_lim_v: 2.5      # 最大线加速度 m/s²
+accel_lim_w: 3.2      # 最大角加速度 rad/s²
+
+# 减速度 = 加速度 × decel_factor
+decel_factor: 1.0
+
+# 输出频率
+frequency: 100
+
+# 反馈模式: 0=NONE, 1=ODOMETRY, 2=COMMANDS
+robot_feedback: 1
