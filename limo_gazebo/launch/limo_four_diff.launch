@@ -12,6 +12,8 @@
     <!-- Load the control parameters -->
     <rosparam file="$(find limo_gazebo)/config/limo_four_diff_control.yaml" command="load"/>
     <!-- gazebo_ros_control reads these from /gazebo_ros_control/pid_gains. -->
+    <!-- <rosparam command="load"
+          file="$(find limo_gazebo)/config/gazebo_pid.yaml"/> -->
     
     <node name="spawn_limo_model" pkg="gazebo_ros" type="spawn_model" args="-x $(arg x_pos)
         -y $(arg y_pos)
@@ -39,7 +41,7 @@
         <rosparam command="load"
                   file="$(find limo_gazebo)/config/ekf.yaml" />
 
-    </node>
+        </node>
     
     <include file="$(find limo_control)/launch/control.launch"/>
 </launch>
