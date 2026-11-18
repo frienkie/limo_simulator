@@ -9,9 +9,8 @@
     <arg name="z_pos" default="0.16"/>
     <arg name="yaw" default="0.0"/>
 
-    <!-- Load the control parameters -->
-    <rosparam file="$(find limo_gazebo)/config/limo_four_diff_control.yaml" command="load"/>
-    <!-- gazebo_ros_control reads these from /gazebo_ros_control/pid_gains. -->
+    <!-- Pure PlanarMove mode: do not load gazebo_ros_control/controller parameters. -->
+    <!-- <rosparam file="$(find limo_gazebo)/config/limo_four_diff_control.yaml" command="load"/> -->
     <!-- <rosparam command="load"
           file="$(find limo_gazebo)/config/gazebo_pid.yaml"/> -->
     
@@ -24,15 +23,18 @@
         -param robot_description
         -model limo" />
 
-    <!-- 只启动 joint_state_controller，不启动 diff_drive_controller -->
-    <node name="controller_spawner"
+    <!-- Pure PlanarMove mode: no controller_manager or joint_state_controller. -->
+    <!-- <node name="controller_spawner"
       pkg="controller_manager"
       type="spawner"
       output="screen"
-      args="limo_state_controller"/>
+      args="limo_state_controller"/> -->
 
     <!-- velocity_smoother: 对 cmd_vel 施加加速度限制 -->
-    <node pkg="yocs_velocity_smoother" type="velocity_smoother" name="velocity_smoother"
+    <node pkg="nodelet" type="nodelet" name="velocity_smoother_nodelet_manager"
+          args="manager" output="screen" />
+    <node pkg="nodelet" type="nodelet" name="velocity_smoother"
+          args="load yocs_velocity_smoother/VelocitySmootherNodelet velocity_smoother_nodelet_manager"
           output="screen">
         <rosparam file="$(find limo_gazebo)/config/velocity_smoother.yaml" command="load"/>
         <remap from="velocity_smoother/raw_cmd_vel"    to="/limo/cmd_vel"/>
@@ -42,7 +44,7 @@
 
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     <!-- <node name="dummy_zero_cmd_vel" pkg="limo_gazebo" type="dummy_cmd_vel" /> -->
-        <node pkg="robot_localization"
+        <!-- <node pkg="robot_localization"
           type="ekf_localization_node"
           name="ekf_localization"
           clear_params="true"
@@ -51,7 +53,7 @@
         <rosparam command="load"
                   file="$(find limo_gazebo)/config/ekf.yaml" />
 
-        </node>
+        </node> -->
     
     <include file="$(find limo_control)/launch/control.launch"/>
 </launch>
