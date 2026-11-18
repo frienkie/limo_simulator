@@ -2,7 +2,7 @@ frequency: 50
 sensor_timeout: 0.1
 
 two_d_mode: true
-publish_tf: false
+publish_tf: true
 
 odom_frame: odom
 base_link_frame: base_link
